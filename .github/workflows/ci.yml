@@ -2,6 +2,9 @@ name: CI
 on: [push, pull_request]
 env:
   CLICOLOR_FORCE: 1
+permissions:
+  contents: read
+
 jobs:
   ci:
     name: CI
@@ -13,9 +16,11 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        persist-credentials: false
     - name: Install rust
-      uses: dtolnay/rust-toolchain@master
+      uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
       with:
         toolchain: ${{ matrix.rust }}
     - name: Install cargo-make
